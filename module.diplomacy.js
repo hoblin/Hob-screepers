@@ -41,8 +41,8 @@ function threatManager() {
         Memory._badBoyArray.push(display);
     }
     if (Game.time % 100 === 0) {
-        if(Memory._enemies !== '') log.a('Current Enemies: ' + Memory._enemies);
-        if(Memory._nuisance !== '') log.a('Current Nuisances: ' + Memory._nuisance);
-        if(Memory._threatList !== '') log.a('Current Threats: ' + Memory._threatList);
+        if(JSON.stringify(Memory._enemies) !== '[]') log.a('Current Enemies: ' + Memory._enemies);
+        if(JSON.stringify(Memory._nuisance) !== '[]') log.a('Current Nuisances: ' + Memory._nuisance);
+        if(JSON.stringify(Memory._threatList) !== '[]') log.a('Current Threats: ' + Memory._threatList);
     }
 }

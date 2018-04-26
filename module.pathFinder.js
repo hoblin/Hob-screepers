@@ -19,7 +19,7 @@ function shibMove(creep, heading, options = {}) {
         allowSK: false,
         forceRepath: false,
         findRoute: false,
-        repathChance: 0.8,
+        repathChance: 0.9,
         preferHighway: true,
         highwayBias: 2.5,
         maxRooms: 1,
