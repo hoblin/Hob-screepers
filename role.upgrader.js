@@ -7,25 +7,7 @@ const profiler = require('screeps-profiler');
 
 function role(creep) {
         if (creep.memory.boostAttempt !== true) return creep.tryToBoost(['upgrade']);
-        //ANNOUNCE
-        if (_.filter(Game.creeps, (c) => (c.memory.announcer === true) && c.memory.overlord === creep.memory.overlord).length === 0) creep.memory.announcer = true;
-        if (creep.memory.announcer) {
-            let sentence = ['-', '#overlords', '-'];
-            if (creep.room.memory.responseNeeded) {
-                if (creep.room.memory.threatLevel === 1) sentence = sentence.concat(['FPCON', 'ALPHA']);
-                if (creep.room.memory.threatLevel === 2) sentence = sentence.concat(['FPCON', 'BRAVO']);
-                if (creep.room.memory.threatLevel === 3) sentence = sentence.concat(['FPCON', 'CHARLIE']);
-                if (creep.room.memory.threatLevel >= 4) sentence = sentence.concat(['FPCON', 'DELTA']);
-            } else {
-                sentence = sentence.concat(['FPCON', 'NORMAL'])
-            }
-            if (Memory._badBoyArray && Memory._badBoyArray.length) {
-                sentence = sentence.concat(['-', 'THREAT', 'LIST', '-']);
-                sentence = sentence.concat(Memory._badBoyArray);
-            }
-            let word = Game.time % sentence.length;
-            creep.say(sentence[word], true);
-        }
+
         //INITIAL CHECKS
         if (creep.borderCheck()) return null;
         if (creep.wrongRoom()) return null;
