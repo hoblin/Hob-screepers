@@ -26,7 +26,7 @@ function role(creep) {
             if (creep.room.controller && (!creep.room.controller.sign || creep.room.controller.sign.username !== USERNAME) &&
                 (!creep.room.controller.owner || !_.includes(FRIENDLIES, creep.room.controller.owner.username)) &&
                 (!creep.room.controller.reservation || !_.includes(FRIENDLIES, creep.room.controller.reservation.username))) {
-                let signs = ["This one will be mine.", "I'll eat that.", "Om-nom-nom", "I want this one", "MOAR ROOMS!!!1!1!"];
+                let signs = ["This one will be mine.", "I'll eat that.", "Om-nom-nom", "I want this one", "MOAR ROOMS!!!1!1!", "DOMINATION!", "I WANT MORE!!!", 'MINE!'];
                 switch (creep.signController(creep.room.controller, _.sample(signs))) {
                     case OK:
                         creep.memory.destinationReached = true;
