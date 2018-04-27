@@ -22,6 +22,12 @@ function run(creep) {
     if (!creep.hasState()) {
         creep.setState(State.MovingToSource);
     }
+    // Move home if was attacked
+    if (creep.hits < creep.hitsMax) {
+        // TODO: setup healing routine
+        IntelLib.saveIntelForRoom(creep.room);
+        creep.setState(State.MoveToHomeroom);
+    };
     switch (creep.getState()) {
         case State.RemoveHostileConstructionSites:
             runRemoveHostileConstructionSites(creep);
