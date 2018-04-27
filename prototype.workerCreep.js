@@ -75,9 +75,10 @@ Creep.prototype.findConstruction = function () {
         this.memory.task = 'build';
         return true;
     }
-    site = shuffle(_.filter(construction, (s) => s.structureType !== STRUCTURE_WALL && s.structureType !== STRUCTURE_RAMPART));
+    site = _.filter(construction, (s) => s.structureType !== STRUCTURE_WALL && s.structureType !== STRUCTURE_RAMPART);
     if (site.length > 0) {
-        this.memory.constructionSite = site[0].id;
+        site = this.pos.findClosestByRange(site);
+        this.memory.constructionSite = site.id;
         this.memory.task = 'build';
         return true;
     }
@@ -701,7 +702,7 @@ Creep.prototype.findEssentials = function () {
     }
     //Controller Container
     let controllerContainer = Game.getObjectById(this.room.memory.controllerContainer);
-    if (controllerContainer && !this.room.memory.responseNeeded && controllerContainer.pos.rangeToTarget(this) > 1 && controllerContainer.store[RESOURCE_ENERGY] < 1000) {
+    if (controllerContainer && !this.room.memory.responseNeeded && controllerContainer.pos.rangeToTarget(this) > 1 && controllerContainer.store[RESOURCE_ENERGY] < 500) {
         let containerDistWeighted;
         const object = controllerContainer;
         let numberOfUsers = _.filter(Game.creeps, (c) => c.memory.energyDestination === object.id).length;

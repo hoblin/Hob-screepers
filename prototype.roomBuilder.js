@@ -20,7 +20,7 @@ Room.prototype.buildRoom = function () {
         return rebuildSpawn(this, structures);
     }
     // Clean bad roads
-    if (Game.time % 500 === 0) {
+    if (Game.time % 100 === 0) {
         for (let key in this.structures) {
             if (this.structures[key].structureType === STRUCTURE_ROAD) {
                 if (this.structures[key].pos.checkForImpassible()) this.structures[key].destroy();
@@ -41,7 +41,7 @@ Room.prototype.buildRoom = function () {
     buildObserver(this, structures);
     buildPowerSpawn(this, structures);
     buildExtractor(this, structures);
-    if (Game.time % 500 === 0) buildRoads(this, structures);
+    if (Game.time % 100 === 0) buildRoads(this, structures);
 };
 
 function buildExtensions(room) {
@@ -180,7 +180,7 @@ function buildWalls(room, structures) {
     let tower = _.filter(room.structures, (s) => s.structureType === STRUCTURE_TOWER && s.my);
     if (!tower.length) return;
     let barrier = _.min(_.filter(room.structures, (s) => (s.structureType === STRUCTURE_WALL || s.structureType === STRUCTURE_RAMPART) && (s.pos.x === 2 || s.pos.y === 2 || s.pos.x === 1 || s.pos.y === 1)), 'hits');
-    if (barrier.hits > barrier.hits < 500000 * room.controller.level) {
+    if (barrier.hits < 500000 * room.controller.level) {
         for (let store of _.filter(structures, (s) => protectedStructures.includes(s.structureType))) {
             room.createConstructionSite(store.pos, STRUCTURE_RAMPART);
         }
@@ -546,7 +546,7 @@ function buildTowers(room, structures) {
 }
 
 function buildRoads(room, structures) {
-    if (Game.time % 100 !== 0 || (room.controller.level < 4 || _.size(Game.constructionSites) >= 45)) return;
+    if (Game.time % 100 !== 0 || (room.controller.level < 3 || _.size(Game.constructionSites) >= 45)) return;
     let spawner = shuffle(_.filter(structures, (s) => s.structureType === STRUCTURE_SPAWN))[0];
     buildRoadAround(room, spawner.pos);
     let mineral = room.mineral[0];

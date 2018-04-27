@@ -1,4 +1,5 @@
 Creep.prototype.swarmRoom = function () {
+    // console.log('swarmRoom')
     if (!this.moveToStaging() || this.room.name === this.memory.targetRoom) {
         if (this.room.name !== this.memory.targetRoom) return this.shibMove(new RoomPosition(25, 25, this.memory.targetRoom), {range: 23});
         let sentence = ['Swarm', 'In', 'Progress'];

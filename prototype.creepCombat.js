@@ -285,6 +285,8 @@ Creep.prototype.fightRanged = function (target) {
 };
 
 Creep.prototype.moveToStaging = function () {
+    // this.memory.stagingComplete = false
+    // this.memory.staging = 'E32S5'
     if (!this.memory.waitFor || this.memory.stagingComplete || this.memory.waitFor === 1 || this.ticksToLive <= 250 || !this.memory.targetRoom) return false;
     if (this.memory.staging) this.memory.stagingRoom = this.memory.staging;
     if (this.memory.stagingRoom === this.room.name) {

@@ -4,7 +4,6 @@ module.exports.hud = function () {
         let level = Memory.targetRooms[key].level || 1;
         let type = Memory.targetRooms[key].type;
         let priority = Memory.targetRooms[key].priority || 4;
-        if (Memory.targetRooms[key].type === 'attack') type = 'Scout';
         let stagingRoom;
         for (let staging in Memory.stagingRooms) {
             if (Game.map.getRoomLinearDistance(staging, key) === 1) {
@@ -106,6 +105,13 @@ module.exports.hud = function () {
         let name = Memory.ownedRooms[key].name;
         let room = Game.rooms[name];
         if (!room) continue;
+        let queue = room.memory.creepBuildQueue;
+        new RoomVisual(name).text(
+            ' Creeps in queue: ' + _.map(queue, 'role'),
+            1,
+            6,
+            {align: 'left', opacity: 0.5, color: '#00cc00'}
+        );
         //Reaction Room
         if (room.memory.reactionRoom) {
             new RoomVisual(name).text(
@@ -172,7 +178,7 @@ module.exports.hud = function () {
             new RoomVisual(name).text(
                 ICONS.upgradeController + ' Controller Level: ' + room.controller.level,
                 1,
-                3,
+                2,
                 {align: 'left', opacity: 0.5}
             );
         }
@@ -180,7 +186,7 @@ module.exports.hud = function () {
             new RoomVisual(name).text(
                 ICONS.crossedSword + ' RESPONSE NEEDED: Threat Level ' + room.memory.threatLevel,
                 1,
-                2,
+                3,
                 {align: 'left', opacity: 0.8, color: '#ff0000'}
             );
         }
@@ -208,5 +214,6 @@ module.exports.hud = function () {
                 {align: 'left', opacity: 0.5, color: '#ff0000'}
             );
         }
+
     }
 };

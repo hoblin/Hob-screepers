@@ -95,6 +95,7 @@ module.exports.processBuildQueue = function () {
 };
 
 function queueCreep(room, importance, options = {}, military = false) {
+    // room.memory.creepBuildQueue = {};
     let cache;
     if (!military) {
         cache = room.memory.creepBuildQueue || {};
@@ -201,8 +202,8 @@ function roomStartup(room, roomCreeps) {
     }
     let pawn = _.filter(roomCreeps, (creep) => (creep.memory.role === 'hauler'));
     let containers = _.filter(room.structures, (s) => s.structureType === STRUCTURE_CONTAINER);
-    if (pawn.length < 2 && containers.length > 0) {
-        queueCreep(room, 2, {role: 'hauler'})
+    if (pawn.length < 3 && containers.length > 0) {
+        queueCreep(room, 1, {role: 'hauler'})
     }
     let worker = _.filter(roomCreeps, (creep) => (creep.memory.role === 'worker'));
     if (worker.length < 2) {
@@ -249,6 +250,7 @@ function roomStartup(room, roomCreeps) {
 }
 
 module.exports.workerCreepQueue = function (room) {
+    // room.memory.creepBuildQueue = {};
     let queue = room.memory.creepBuildQueue;
     let level = getLevel(room);
     let roomCreeps = _.filter(Game.creeps, (r) => r.memory.overlord === room.name);
@@ -286,7 +288,7 @@ module.exports.workerCreepQueue = function (room) {
     //Worker
     if (!_.includes(queue, 'worker') && !room.memory.responseNeeded) {
         let amount = 1;
-        if (_.filter(room.constructionSites, (s) => s.structureType !== STRUCTURE_RAMPART && s.structureType !== STRUCTURE_WALL).length) amount = 3;
+        if (_.filter(room.constructionSites, (s) => s.structureType !== STRUCTURE_RAMPART && s.structureType !== STRUCTURE_WALL).length) amount = 4;
         let workers = _.filter(roomCreeps, (creep) => creep.memory.role === 'worker');
         if (workers.length < amount) {
             queueCreep(room, PRIORITIES.worker, {role: 'worker'})
@@ -301,7 +303,7 @@ module.exports.workerCreepQueue = function (room) {
         return queueCreep(room, -1, {role: 'hauler', reboot: true});
     }
     if (!_.includes(queue, 'hauler')) {
-        let amount = 2;
+        let amount = 4;
         let hauler = _.filter(roomCreeps, (creep) => (creep.memory.role === 'hauler'));
         if (hauler.length < amount) {
             queueCreep(room, PRIORITIES.hauler, {role: 'hauler'})

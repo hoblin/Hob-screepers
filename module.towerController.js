@@ -48,12 +48,6 @@ function towerControl(room) {
                 if (woundedCreep.length > 0) {
                     tower.heal(woundedCreep[0]);
                 }
-            } else if (tower.energy > tower.energyCapacity * 0.45) {
-                let creeps = tower.room.creeps;
-                let woundedCreep = _.filter(creeps, (c) => c.hits < c.hitsMax && _.includes(FRIENDLIES, c.owner.username));
-                if (woundedCreep.length > 0) {
-                    tower.heal(woundedCreep[0]);
-                }
             } else if (tower.energy > tower.energyCapacity * 0.65) {
                 let creeps = tower.room.creeps;
                 let structures = tower.room.structures;
@@ -73,6 +67,12 @@ function towerControl(room) {
                 }
                 let lowestRampart = _.min(_.filter(structures, (s) => s.structureType === STRUCTURE_RAMPART), 'hits');
                 tower.repair(lowestRampart);
+            } else if (tower.energy > tower.energyCapacity * 0.45) {
+                let creeps = tower.room.creeps;
+                let woundedCreep = _.filter(creeps, (c) => c.hits < c.hitsMax && _.includes(FRIENDLIES, c.owner.username));
+                if (woundedCreep.length > 0) {
+                    tower.heal(woundedCreep[0]);
+                }
             }
         }
 }

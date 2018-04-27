@@ -11,7 +11,7 @@ function shibMove(creep, heading, options = {}) {
     creep.borderCheck();
     _.defaults(options, {
         useCache: true,
-        ignoreCreeps: false,
+        ignoreCreeps: true,
         maxOps: DEFAULT_MAXOPS,
         range: 1,
         ignoreStructures: false,
