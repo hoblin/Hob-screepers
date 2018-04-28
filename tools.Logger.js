@@ -5,6 +5,7 @@ class Logger {
         Memory.settings.loggingLevel = newLevel;
     }
     _log(message, room, logLevel, color = '#ffffff') {
+        message = message.replace(/([A-z]\d\d[A-z]\d\d)/g, '<a href="#!/room/' + Game.shard.name + '/$1">$1</a>');
         if (logLevel <= Memory.settings.loggingLevel) {
             console.log("<span style='color:" + color + "'><a href='#!/room/" + Game.shard.name + "/" + room + "'>" + room +
                 "</a> " + message + "</span>");
