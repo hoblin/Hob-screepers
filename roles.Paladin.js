@@ -1,6 +1,7 @@
 "use strict";
 const _Targeting = require("./rolelib.targeting");
 const PositionLib = require("./lib.position");
+const IntelLib = require("./lib.intel");
 const Logger_1 = require("./tools.Logger");
 var State;
 (function (State) {
@@ -140,7 +141,17 @@ function getNewTargetToAttack(creep) {
 function moveAndAttack(creep, targetToAttack) {
     let range = creep.pos.getRangeTo(targetToAttack);
     if (range === 1) {
-        creep.attack(targetToAttack);
+        var attackSuccess = creep.attack(targetToAttack);
+        switch(attackSuccess){
+            case OK:
+                break;
+            case ERR_NO_BODYPART:
+                if(creep.room.controller.safeMode) {
+                    creep.memory.target = getNextTargetRoom(creep);
+                    creep.setState(State.MovingToTarget);
+                };
+                break;
+        }
         creep.moveTo(targetToAttack, { ignoreCreeps: true, maxRooms: 1 });
     }
     if (range > 1) {
