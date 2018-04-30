@@ -1,4 +1,5 @@
 "use strict";
+const Logger_1 = require("./tools.Logger");
 const _Manager_1 = require("./managers._Manager");
 const RoomClaimer = require("./roles.RoomClaimer");
 const ExpansionWorker = require("./roles.ExpansionWorker");
@@ -406,7 +407,7 @@ function evaluateExpansion(roomName) {
         return undefined;
     }
     value = value + outpostValue;
-    console.log("Expansion-value for " + roomName + " is " + value);
+    Logger_1.log.info("Expansion-value for " + roomName + " is " + value, roomName);
     return value;
 }
 exports.evaluateExpansion = evaluateExpansion;

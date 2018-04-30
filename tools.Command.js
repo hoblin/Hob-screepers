@@ -142,6 +142,7 @@ class Command {
             return start + "<span style='color:" + errorColor + ";'>You need to specify at least one target room.</span>";
         }
         for (let target of route) {
+            console.log('target: ' + JSON.stringify(target))
             let distance = Game.map.getRoomLinearDistance(roomName, target);
             if (!(distance < 21)) {
                 return start + "<span style='color:" + errorColor + ";'>Room " + target + " is not found, or the distance is too far (more than 20).</span>";

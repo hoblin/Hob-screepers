@@ -19,6 +19,10 @@ class CrisisManager extends _Manager_1.Manager {
         this.creepService = creepService;
     }
     run(pri) {
+        // OrdersRepository.clearOrders(Game.rooms['W15N31']);
+        // orderPioneer(Game.rooms['W15N31']);
+        // orderPioneer(Game.rooms['W15N31']);
+        // orderPioneer(Game.rooms['W15N31']);
         if (pri === _Manager_1.ManagerPriority.Critical) {
             let lastRun = this.getValue(this.MEMORY_LASTRUN);
             if (lastRun === undefined || lastRun + 500 < Game.time) {

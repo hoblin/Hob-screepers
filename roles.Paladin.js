@@ -16,6 +16,7 @@ function run(creep) {
         creep.setState(State.Waiting);
     }
     healIfNeeded(creep);
+    // creep.say(State[creep.getState()])
     switch (creep.getState()) {
         case State.Waiting:
             runWaiting(creep);
@@ -46,7 +47,8 @@ function runSleep(creep) {
     }
 }
 function runMovingToTarget(creep) {
-    let targetRoom = creep.memory.target;
+    let targetRoom;
+    if (creep.memory.target) targetRoom = creep.memory.target.toUpperCase();
     if (targetRoom === undefined) {
         targetRoom = getNextTargetRoom(creep);
         if (targetRoom === undefined) {

@@ -61,7 +61,7 @@ class Traveler {
             },
         });
         if (!_.isArray(ret)) {
-            console.log(`couldn't findRoute to ${destination}`);
+            console.log("couldn't findRoute to " + destination);
             if (Memory.empire !== undefined) {
                 if (Memory.empire.inaccessible === undefined) {
                     Memory.empire.inaccessible = [];
@@ -78,6 +78,7 @@ class Traveler {
         return allowedRooms;
     }
     findTravelPath(origin, destination, options = {}) {
+        if (destination && destination.pos && destination.pos.roomName) destination.pos.roomName = destination.pos.roomName.toUpperCase();
         _.defaults(options, {
             ignoreCreeps: true,
             range: 1,

@@ -14,6 +14,7 @@ function run(creep) {
             creep.memory.target = undefined;
             return;
         }
+        // console.log(creep.room.name + '->' + creep.memory.target)
         let response = creep.travelToRoom(creep.memory.target, { allowHostile: false, allowSK: true }, true);
         if (response === ERR_NO_PATH || response === ERR_INVALID_ARGS) {
             if (Memory.rooms[creep.memory.target] === undefined) {

@@ -17,6 +17,10 @@ class LogisticsManager extends _Manager_1.Manager {
         this.creepService = creepService;
     }
     run(pri) {
+        // var roomToReorderName = 'W15N31'
+        // var roomToReorder = Game.rooms[roomToReorderName];
+        // OrdersRepository.clearOrders(roomToReorder)
+        // this.orderBaseHauler(roomToReorder)
         if (pri === _Manager_1.ManagerPriority.Critical) {
             this.creepService.runCreeps(role_1.Role.BaseHauler, BaseHauler.run);
             this.creepService.runCreeps(role_1.Role.BaseCourier, BaseCourier.run);
@@ -97,11 +101,11 @@ class LogisticsManager extends _Manager_1.Manager {
         }
         let order = new Order_1.Order();
         order.body = ProfileUtilities.getHaulerBody(usedTier);
-        if (count > 0 && room.isUnderSiege()) {
+        if (count > 1 && room.isUnderSiege()) {
             order.priority = priority_1.Priority.Important;
         }
         else if (room.storage === undefined) {
-            order.priority = priority_1.Priority.Low;
+            order.priority = priority_1.Priority.Blocker;
         }
         else {
             order.priority = priority_1.Priority.Blocker;

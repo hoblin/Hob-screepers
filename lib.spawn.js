@@ -1,4 +1,5 @@
 "use strict";
+const Logger_1 = require("./tools.Logger");
 const OperationSpawnmove = require("./operations.Spawnmove");
 const IntelLib = require("./lib.intel");
 const operationtypes_1 = require("./enums.operationtypes");
@@ -12,7 +13,7 @@ function createSpawnmoveOperation(room, basePos) {
         Memory.operations = [];
     }
     Memory.operations.push(op);
-    console.log("Starting a operation to move the spawn in room " + room.name + ". It will start when we have a storage at RCL 4.");
+    Logger_1.log.info("Starting a operation to move the spawn in room " + room.name + ". It will start when we have a storage at RCL 4.", room.name);
     return true;
 }
 exports.createSpawnmoveOperation = createSpawnmoveOperation;
@@ -58,7 +59,7 @@ function findSpawnLocation(roomName, firstRoom = false) {
         }
     }
     if (max < 5 && !firstRoom) {
-        console.log("Did not find a spawnposition for room " + roomName);
+        Logger_1.log.info("Did not find a spawnposition for room " + roomName, roomName);
         return undefined;
     }
     let perfect = [];
@@ -96,7 +97,7 @@ function findSpawnLocation(roomName, firstRoom = false) {
         }
         let chosen = findBestSpawnPosition(roomName, perfect);
         let spawnpos = new RoomPosition(chosen.x, chosen.y - 2, chosen.roomName);
-        console.log("Found perfect spawnlocation for " + roomName + ": " + spawnpos);
+        Logger_1.log.info("Found perfect spawnlocation for " + roomName + ": " + spawnpos, roomName);
         return { pos: spawnpos, value: 20 };
     }
     okey = filterDistanceToVitalPositions(roomName, okey);
@@ -106,7 +107,7 @@ function findSpawnLocation(roomName, firstRoom = false) {
         }
         let chosen = findBestSpawnPosition(roomName, okey);
         let spawnpos = new RoomPosition(chosen.x, chosen.y - 2, chosen.roomName);
-        console.log("Found okey spawnlocation for " + roomName + ": " + spawnpos);
+        Logger_1.log.info("Found okey spawnlocation for " + roomName + ": " + spawnpos, roomName);
         return { pos: spawnpos, value: 0 };
     }
     possible = filterDistanceToVitalPositions(roomName, possible);
@@ -116,7 +117,7 @@ function findSpawnLocation(roomName, firstRoom = false) {
         }
         let chosen = findBestSpawnPosition(roomName, possible);
         let spawnpos = new RoomPosition(chosen.x, chosen.y - 2, chosen.roomName);
-        console.log("Found possible spawnlocation for " + roomName + ": " + spawnpos);
+        Logger_1.log.info("Found possible spawnlocation for " + roomName + ": " + spawnpos, roomName);
         return { pos: spawnpos, value: -20 };
     }
     if (firstRoom === true) {
@@ -129,7 +130,7 @@ function findSpawnLocation(roomName, firstRoom = false) {
             }
         }
     }
-    console.log("Did not find a spawnposition for room " + roomName);
+    Logger_1.log.info("Did not find a spawnposition for room " + roomName, roomName);
     return undefined;
 }
 exports.findSpawnLocation = findSpawnLocation;
@@ -156,7 +157,7 @@ function removeTrickyPositions(roomName, positions) {
 }
 function findBestSpawnPosition(roomName, positions) {
     if (positions.length < 1) {
-        console.log("ERROR: Trying to choose among zero spawnpositions in room " + roomName);
+        Logger_1.log.info("ERROR: Trying to choose among zero spawnpositions in room " + roomName, roomName);
         return new RoomPosition(25, 25, roomName);
     }
     let chosen = positions[0];

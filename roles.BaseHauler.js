@@ -39,6 +39,10 @@ function run(creep) {
         (!(dropofBuilding instanceof StructureContainer) && dropofBuilding.energy === dropofBuilding.energyCapacity)) {
         findDropofBuilding(creep);
         dropofBuilding = Game.getObjectById(creep.memory.dropofBuilding);
+        if (dropofBuilding !== null && needRefillFor(creep, dropofBuilding)) { // Refill to finish in one run
+            console.log('need moar to finish');
+            creep.startTanking();
+        };
     }
     if (dropofBuilding === null && !creep.isTanking()) {
         if (creep.carry[RESOURCE_ENERGY] < creep.carryCapacity) {
@@ -269,6 +273,13 @@ function findDropofBuilding(creep, exceptId = null) {
     }
     creep.memory.dropofBuilding = undefined;
 }
+
+function needRefillFor(creep, dropofBuilding) {
+    return (!(dropofBuilding instanceof StructureContainer) &&
+        (dropofBuilding.energyCapacity - dropofBuilding.energy < creep.energyCapacity) &&
+        (dropofBuilding.energyCapacity - dropofBuilding.energy > creep.energy))
+}
+
 function lookForCloseStructureNeedingEnergy(creep, range, exceptId) {
     for (let x of _.range(-range, range + 1)) {
         for (let y of _.range(-range, range + 1)) {
